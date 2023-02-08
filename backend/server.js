@@ -1,14 +1,18 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-
+const connectDB = require("./config/db");
+const usrRoutes = require("./routes/userRoutes");
 const app = express();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
 const port = process.env.PORT;
+connectDB();
 
 const notes = require("./data/notes");
+
+app.use("/api/users", usrRoutes);
 
 app.get("/api/notes", (req, res) => {
   res.json(notes);
